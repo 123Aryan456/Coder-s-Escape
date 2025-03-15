@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Code Analysis Report</title>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; margin: 20px; }
+        .header { text-align: center; margin-bottom: 40px; }
+        .section { margin-bottom: 30px; }
+        .metrics { display: flex; justify-content: space-around; }
+        .metric { border: 1px solid #ccc; padding: 10px; border-radius: 5px; text-align: center; width: 30%; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        table, th, td { border: 1px solid #ccc; }
+        th, td { padding: 10px; text-align: left; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Code Analysis Report</h1>
+        <p>Generated on {{ timestamp }}</p>
+    </div>
+
+    <div class="section">
+        <h2>Summary</h2>
+        <div class="metrics">
+            <div class="metric">
+                <h3>Readability</h3>
+                <p>{{ readability_score }}</p>
+            </div>
+            <div class="metric">
+                <h3>Complexity</h3>
+                <p>{{ complexity_metrics.cyclomatic_complexity }}</p>
+            </div>
+            <div class="metric">
+                <h3>Style Issues</h3>
+                <p>{{ style_issues | length }}</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Style Issues</h2>
+        <table>
+            <tr>
+                <th>Line</th>
+                <th>Issue</th>
+            </tr>
+            {% for issue in style_issues %}
+            <tr>
+                <td>{{ issue.line }}</td>
+                <td>{{ issue.description }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+    <div class="section">
+        <h2>Refactoring Suggestions</h2>
+        <ul>
+            {% for suggestion in refactoring_suggestions %}
+            <li>{{ suggestion }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>

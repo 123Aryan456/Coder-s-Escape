@@ -1,0 +1,84 @@
+body {
+  margin: 0;
+  padding: 0;
+  background: #0d0d0d;
+  color: #00ff00;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+.container, .terminal {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 25px;
+  background: #000;
+  border: 3px solid #00ff00;
+  box-shadow: 0 0 15px #00ff00;
+}
+
+h1 {
+  text-align: center;
+  color: #ff3333; /* Red for extra punch */
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  text-shadow: 0 0 5px #ff3333;
+}
+
+p {
+  text-align: center;
+  margin-bottom: 25px;
+  font-size: 1.1em;
+}
+
+textarea {
+  width: 100%;
+  background: #111;
+  color: #00ff00;
+  border: 2px solid #00ff00;
+  padding: 15px;
+  resize: none;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 1em;
+}
+
+button {
+  display: block;
+  margin: 25px auto;
+  padding: 12px 30px;
+  background: #ff3333;
+  color: #000;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  text-transform: uppercase;
+  box-shadow: 0 0 10px #ff3333;
+}
+
+button:hover {
+  background: #cc2929;
+}
+
+.output {
+  background: #111;
+  padding: 20px;
+  border: 2px solid #00ff00;
+  min-height: 250px;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  font-size: 1.1em;
+  line-height: 1.4;
+}
+
+.back-btn {
+  display: block;
+  text-align: center;
+  margin-top: 25px;
+  color: #00ff00;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 1.1em;
+}
+
+.back-btn:hover {
+  color: #00cc00;
+  text-shadow: 0 0 5px #00cc00;
+}

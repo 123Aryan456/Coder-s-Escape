@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>NeuraSense QR Analyzer</title>
+<style>
+  body { font-family:sans-serif; margin:1em; background:linear-gradient(135deg,#f8f8f8,#eaeaea); }
+  textarea { width:100%; height:80px; font-size:12px; border:1px solid #ccc; border-radius:4px; padding:4px; }
+  button { padding:6px 12px; border:none; background:#3498db; color:#fff; border-radius:4px; cursor:pointer; }
+  button:hover { background:#2980b9; }
+  #r { margin-top:10px; padding:10px; background:#fff; border:1px solid #ddd; border-radius:4px; }
+  canvas { margin-top:10px; border:1px solid #ddd; background:#fff; }
+</style>
+</head>
+<body>
+<h1>NeuraSense QR Analyzer</h1>
+<textarea id="c" placeholder="Paste code"></textarea><br>
+<button onclick="analyze()">Analyze</button>
+<div id="r"></div>
+<canvas id="chart" width="220" height="100"></canvas>
+<script>
+function analyze(){
+  var t=document.getElementById("c").value,
+      r="",
+      L=t.split("\n"),
+      n=L.length, i,
+      tab=0, sp=0;
+  // Count indentation type on each line
+  for(i=0;i<n;i++){
+    var m=L[i].match(/^( +|\t+)/);
+    if(m) m[0].indexOf("\t")>=0 ? tab++ : sp++;
+  }
+  r+="Indentation: "+(tab>sp?"Tabs":"Spaces")+" ("+tab+" tabs, "+sp+" spaces)<br>";
+  
+  // trailing whitespace lines
+  var tw=0;
+  for(i=0;i<n;i++){
+    if(L[i].match(/\s+$/)) tw++;
+  }
+  r+="Trailing whitespace: "+tw+" lines<br>";
+  
+  // TODO/FIXME occurrences
+  var td=(t.match(/TODO|FIXME/g)||[]).length;
+  r+="TODO/FIXME: "+td+"<br>";
+  
+  // basic control flow statements
+  var cf=(t.match(/\b(if|for|while)\b/g)||[]).length;
+  r+="Control flow: "+cf+"<br>";
+  
+  // for balanced quotes
+  var q=(t.match(/"/g)||[]).length;
+  r+="Quotes balanced: "+(q%2===0?"Yes":"No")+"<br>";
+  
+  document.getElementById("r").innerHTML=r;
+  
+  // bar chart on canvas
+  var canvas=document.getElementById("chart");
+  if(canvas.getContext){
+    var ctx=canvas.getContext("2d");
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+
+    var metrics=[["Tabs",tab],["Spaces",sp],["Trailing",tw],["TODO",td],["Ctrl",cf],["Lines",n]];
+    var max=0;
+    for(i=0;i<metrics.length;i++){
+      if(metrics[i][1]>max) max=metrics[i][1];
+    }
+    if(max==0) max=1;
+    var bw=30, gap=10;
+    for(i=0;i<metrics.length;i++){
+      var h=(metrics[i][1]/max)*canvas.height;
+      ctx.fillStyle="#3498db";
+      ctx.fillRect(i*(bw+gap), canvas.height-h, bw, h);
+      ctx.fillStyle="#000";
+      ctx.font="10px sans-serif";
+      ctx.fillText(metrics[i][0], i*(bw+gap), canvas.height-h-2);
+    }
+  }
+}
+</script>
+</body>
+</html>
+
+
