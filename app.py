@@ -14,7 +14,7 @@ from analyzers.unit_test_recommender import UnitTestRecommender
 app = Flask(__name__)
 
 def analyze_code(code_str, config):
-    # Run complexity analysis
+    # complexity analysis
     complexity_analyzer = ComplexityAnalyzer(code_str)
     complexity_metrics = complexity_analyzer.get_metrics()
 
